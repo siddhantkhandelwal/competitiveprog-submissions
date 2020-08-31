@@ -3,21 +3,24 @@ class Solution
 public:
     vector<int> partitionLabels(string S)
     {
-        vector<int> last(26, 0);
-        for (int i = 0; i < S.size(); i++)
-            last[S[i] - 'a'] = i;
-
-        vector<int> res;
-        int j = 0, k = 0;
+        vector<int> charIdx(26, 0);
         for (int i = 0; i < S.size(); i++)
         {
-            j = max(j, last[S[i] - 'a']);
-            if (i == j)
+            charIdx[S[i] - 'a'] = i;
+        }
+
+        vector<int> results;
+
+        int maxIdx = -1, lastIdx = 0;
+        for (int i = 0; i < S.size(); i++)
+        {
+            maxIdx = max(maxIdx, charIdx[S[i] - 'a']);
+            if (i == maxIdx)
             {
-                res.push_back(i - k + 1);
-                k = i + 1;
+                results.push_back(maxIdx - lastIdx + 1);
+                lastIdx = i + 1;
             }
         }
-        return res;
+        return results;
     }
 };
