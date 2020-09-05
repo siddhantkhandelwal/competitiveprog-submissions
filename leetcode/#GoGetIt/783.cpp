@@ -12,21 +12,25 @@
 class Solution
 {
 public:
-    int helper(TreeNode *root, int &dia)
+    void helper(TreeNode *root, int &minDiff)
     {
         if (!root)
         {
-            return 0;
+            return;
         }
-        int ld = helper(root->left, dia);
-        int rd = helper(root->right, dia);
-        dia = max(dia, ld + rd);
-        return 1 + max(ld, rd);
+        helper(root->left, pre, res);
+        if (pre != -1)
+        {
+            res = min(res, root->val - pre);
+        }
+        pre = root->val;
+        helper(root->right, pre, res);
     }
-    int diameterOfBinaryTree(TreeNode *root)
+    int minDiffInBST(TreeNode *root)
     {
-        int dia = 0;
-        helper(root, dia);
-        return dia;
+        int res = INT_MAX;
+        int pre = -1;
+        helper(root, pre, res);
+        return res;
     }
 };

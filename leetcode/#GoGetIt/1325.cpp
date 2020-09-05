@@ -12,21 +12,12 @@
 class Solution
 {
 public:
-    int helper(TreeNode *root, int &dia)
+    TreeNode *removeLeafNodes(TreeNode *root, int target)
     {
-        if (!root)
-        {
-            return 0;
-        }
-        int ld = helper(root->left, dia);
-        int rd = helper(root->right, dia);
-        dia = max(dia, ld + rd);
-        return 1 + max(ld, rd);
-    }
-    int diameterOfBinaryTree(TreeNode *root)
-    {
-        int dia = 0;
-        helper(root, dia);
-        return dia;
+        if (root->left)
+            root->left = removeLeafNodes(root->left, target);
+        if (root->right)
+            root->right = removeLeafNodes(root->right, target);
+        return root->left == root->right && root->val == target ? NULL : root;
     }
 };

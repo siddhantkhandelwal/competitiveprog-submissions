@@ -12,21 +12,18 @@
 class Solution
 {
 public:
-    int helper(TreeNode *root, int &dia)
+    TreeNode *trimBST(TreeNode *root, int L, int R)
     {
         if (!root)
         {
-            return 0;
+            return root;
         }
-        int ld = helper(root->left, dia);
-        int rd = helper(root->right, dia);
-        dia = max(dia, ld + rd);
-        return 1 + max(ld, rd);
-    }
-    int diameterOfBinaryTree(TreeNode *root)
-    {
-        int dia = 0;
-        helper(root, dia);
-        return dia;
+        if (root->val < L)
+            return trimBST(root->right, L, R);
+        if (root->val > R)
+            return trimBST(root->left, L, R);
+        root->left = trimBST(root->left, L, R);
+        root->right = trimBST(root->right, L, R);
+        return root;
     }
 };

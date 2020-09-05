@@ -12,21 +12,15 @@
 class Solution
 {
 public:
-    int helper(TreeNode *root, int &dia)
+    TreeNode *invertTree(TreeNode *root)
     {
         if (!root)
         {
-            return 0;
+            return NULL;
         }
-        int ld = helper(root->left, dia);
-        int rd = helper(root->right, dia);
-        dia = max(dia, ld + rd);
-        return 1 + max(ld, rd);
-    }
-    int diameterOfBinaryTree(TreeNode *root)
-    {
-        int dia = 0;
-        helper(root, dia);
-        return dia;
+        invertTree(root->left);
+        invertTree(root->right);
+        swap(root->left, root->right);
+        return root;
     }
 };
