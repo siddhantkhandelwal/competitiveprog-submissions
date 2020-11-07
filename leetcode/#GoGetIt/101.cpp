@@ -12,25 +12,29 @@
 class Solution
 {
 public:
-    void helper(TreeNode *root, int &minDiff, int &res)
+    bool isSymmetric(TreeNode *root)
     {
         if (!root)
-        {
-            return;
-        }
-        helper(root->left, minDiff, res);
-        if (minDiff != -1)
-        {
-            res = min(res, root->val - minDiff);
-        }
-        minDiff = root->val;
-        helper(root->right, minDiff, res);
+            return true;
+        return helper(root->left, root->right);
     }
-    int minDiffInBST(TreeNode *root)
+
+    bool helper(TreeNode *p, TreeNode *q)
     {
-        int res = INT_MAX;
-        int pre = -1;
-        helper(root, pre, res);
-        return res;
+        if (!p && !q)
+        {
+            return true;
+        }
+        else if (!p || !q)
+        {
+            return false;
+        }
+
+        if (p->val != q->val)
+        {
+            return false;
+        }
+
+        return helper(p->left, q->right) && helper(p->right, q->left);
     }
 };

@@ -3,7 +3,7 @@ class Solution
 public:
     int maxProfit(vector<int> &prices)
     {
-        int buy1 = INT_MIN;
+        int buy1 = -prices[0];
         int sell1 = 0;
         int buy2 = INT_MIN;
         int sell2 = 0;
